@@ -15,7 +15,7 @@ There are 3 main ways to run the assessments:
 - 'main_run_ep.py': run one energy simulation
 - 'main_run_multi.py': run multiple energy simulations using parallel processing
 - 'main_run_surr.py': run energy assessments using the neural network
-- 'buliding_class.py': initialization of building class and main functions
+- 'building_class.py': initialization of building class and main functions
 - 'ep_nieman_tudelft_18_10.csv': nieman database with detailed information per building
 - 'bag_adres_ids': randomly selected BAG Adres IDs to use as example for 'main_run_multi.py'
 
