@@ -1,1 +1,0 @@
-## Create image folder
