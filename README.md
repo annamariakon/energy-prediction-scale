@@ -4,6 +4,9 @@ This repository contains the codes referring to the paper "Decision support syst
 
 ![Plots of heating & cooling demand](images/heating_cooling_demand.png)
 
+## Structure
+The scripts are made to be able to run fast energy assessments at scale so that the potential at district level can be assessed. There is one alternative which is to automatically generate the IDF files and run EnergyPlus in batches and another one which is to use a surrogate model that is trained based on synthetic data produced by EnergyPlus simulations. 
+
 Connecting to open-source GIS data, the extraction of building geometry is automated, whereas the connection to probabilities from WoonData provides realistic estimation of properties given the archetype and label of the building. The scripts are adjusted for Rotterdam (the Netherlands) and can also be used for other cities in the same country. ++ description of main workflow
 
 ![Graphical abstract](images/graphical_abstract.png)
@@ -12,16 +15,19 @@ For more information, please refer to the [paper]().
 
 ## Installation 
 
-### 1. Create the virtual environment
+### 1. Install EnergyPlus v.23-2-0 
 
-### 2. Install the dependencies
+In case you want to perform the energy assessment using Energyplus, you must have downloaded and installed the application from [https://github.com/NREL/EnergyPlus/releases/tag/v23.2.0](https://github.com/NREL/EnergyPlus/releases/tag/v23.2.0).
 
-### 3. (optional) Test the installation
+### 2. Create the virtual environment
 
-### 4. Install EnergyPlus v.23-2-0 
+```
+conda create --name energy_prediction_scale_env -y python==3.9
+conda activate energy_prediction_scale_env
+```
+### 3. Install the dependencies
 
-## Structure
-The scripts are made to be able to run fast energy assessments at scale so that the potential at district level can be assessed. There is one alternative which is to automatically generate the IDF files and run EnergyPlus in batches and another one which is to use a surrogate model that is trained based on synthetic data produced by EnergyPlus simulations. 
+### 4. (optional) Test the installation
 
 ## Code
 
@@ -74,15 +80,26 @@ Choose retrofit option / available retrofits from TABULA database
 
 ## Results (Decision support for retrofit planning)
 
-Here we show some characteristic plots using the decision support system.
+The final outcome is a map of heating and cooling demand per building at district level. Given the uncertainty ranges, the map does not provide only deterministic values but a distribution of possible energy outcomes as well as the probability that the whole neighborhood exceeds a specific energy target. This can then be used by policy makers to evaluate the outcome and the associated risk given different retrofit scenarios. Below there are characteristic plots based on different baselines. For detailed discussion of results, you can look at the [paper]().
+
+![Plot showing the distribution of energy outcome for different baselines]()
 
 ## Training
 
-Here we show the basic characteristics related to training and the most important features/outcome of the database.
+The neural network is trained based on synthetic data produced by EnergyPlus using the batch energy assessment via parallel processing. 10k BAG IDs corresponding to all possible archetypes are randomly selected from the Rotterdam building stock. Different retrofit packages are created through sampling from uniform distributions corresponding to the possible ranges of material properties, infiltration, and equipment capacity and efficiency. The values of the basic input features and energy ranges are shown in the following image.
+
+![Plots showing the ranges of input features and energy outcomes]()
+
+The neural network architecture consists of an input layer with 32 features, two hidden layers with 64 neurons each, and an output layer with two outputs. All layers are fully connected, and the hyperparameters are tuned using grid search.
+
+![Plot showing training efficiency]()
 
 ## Acknowledgements 
-We used eppy and geomeppy python libraries. The repository is inspired by. + BAG data + future weather generator + Woondata
-The work was produced within the framework of DE-CIST project funded by the ICLEI Action Fund and Multicare project.
+The building energy performance simulations are conducted using [EnergyPlus](https://energyplus.net/) and the respective input data files (.idf) are generated using [Eppy](https://github.com/santoshphilip/eppy) and [GeomEppy](https://github.com/jamiebull1/geomeppy) Python libraries. The code is using data from Nieman report (provided by Gemeente Rotterdam) and open-source 3DBAG data (provided via). The probabilities of having specific material properties and equipment type are calculated based on data from the Woon database (provided by DANS institute). Lastly, the TMY data are extracted from climateonebuilding.org and are morphed according to future climate scenarios using the future weather generator from (Rodriguez et al., 2023). 
+
+The repository is inspired by [AmsterTime](https://github.com/seyrankhademi/AmsterTime) and [jax-imprl](https://github.com/omniscientoctopus/jax-imprl).
+
+This material is based upon work supported by the DE-CIST project under the ICLEI Action Fund, the MultiCare EU project (GA no. 101123467), and the TU Delft AI Labs program.
 
 ## Citation
 The source code in this repository is released under the MIT License. If you would like to refer to our work, please consider citing:
