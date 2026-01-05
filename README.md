@@ -3,7 +3,7 @@
 This repository contains the codes referring to the paper "Decision support system for urban energy retrofit planning under uncertainties". The code provides building-level assessment of energy demand for multiple buildings at a time considering uncertainties related to material and equipment performance and weather data under different scenarios. The final plots display the distribution over possible energy demand per building as well as aggregated results at district level. 
 
 ## Overview 
-The scripts are made to be able to run fast energy assessments at scale so that the potential at district level can be assessed. There is one alternative which is to automatically generate the IDF files and run EnergyPlus in batches and another one which is to use a surrogate model that is trained based on synthetic data produced by EnergyPlus simulations. Connecting to open-source GIS data, the extraction of building geometry is automated, whereas the connection to probabilities from WoonData provides realistic estimation of properties given the archetype and label of the building. The scripts are adjusted for Rotterdam (the Netherlands) and can also be used for other cities in the same country. ++ description of main workflow
+++ description of main workflow ++
 
 ![Graphical abstract](images/graphical_abstract.png)
 
