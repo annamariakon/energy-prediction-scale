@@ -59,10 +59,16 @@ Energy_prediction_scale
 |   ├── blocks_kralingseveer.csv: BAG IDs belonging to each building block in Kralingseveer
 |   ├── kralingseveer.shp: Shape file containing the building boundaries for Kralingseveer neighborhood
 |   ├── bags_training.csv: 10k BAG IDs randomly selected to produce synthetic data and use for training the NN
-|   ├── weather_data:
-    |   ├── TMY_file.epw: Typical Meteorological Year file referring to weather data from the period 2009-2023 in Rotterdam, NL
-    |   ├── SSP345_file.epw: Morphed TMY file corresponding to SSP scenario 3-4.5
-    |   ├── SSP585_file.epw: Morphed TMY file corresponding to SSP scenario 5-8.5
+|   ├── template.idf: Empty idf template
+├── run_surrogate_files:
+|   ├── one_hot_encoder_archetype.joblib
+|   ├── surrogate_heating_cooling_pth
+|   ├── input_scaler.pkl
+|   ├── output_scaler.pkl
+├── epw_file:
+    ├── TMY_file.epw: Typical Meteorological Year file referring to weather data from the period 2009-2023 in Rotterdam, NL
+    ├── SSP345_file.epw: Morphed TMY file corresponding to SSP scenario 3-4.5
+    ├── SSP585_file.epw: Morphed TMY file corresponding to SSP scenario 5-8.5
 ```
 
 ## How to run the energy assessment
