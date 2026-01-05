@@ -1,13 +1,11 @@
 # A Repository for building-level energy assessment at scale considering material, equipment & weather uncertainties
 
-This repository contains the codes referring to the paper "Decision support system for urban energy retrofit planning under uncertainties". The code provides building-level assessments of energy demand for many buildings at a time considering material and equipment performance and weather data under different scenarios. The final outcome are plots with heating and cooling demand at building and district level with different probabilities. 
+This repository contains the codes referring to the paper "Decision support system for urban energy retrofit planning under uncertainties". The code provides building-level assessments of energy demand for multiple buildings at a time considering uncertainties related to material and equipment performance and weather data under different scenarios. The final plots include building-level assessments of heating and cooling energy demand at district level with different probabilities. 
 
 ![Plots of heating & cooling demand](images/heating_cooling_demand.png)
 
-## Structure
-The scripts are made to be able to run fast energy assessments at scale so that the potential at district level can be assessed. There is one alternative which is to automatically generate the IDF files and run EnergyPlus in batches and another one which is to use a surrogate model that is trained based on synthetic data produced by EnergyPlus simulations. 
-
-Connecting to open-source GIS data, the extraction of building geometry is automated, whereas the connection to probabilities from WoonData provides realistic estimation of properties given the archetype and label of the building. The scripts are adjusted for Rotterdam (the Netherlands) and can also be used for other cities in the same country. ++ description of main workflow
+## Overview 
+The scripts are made to be able to run fast energy assessments at scale so that the potential at district level can be assessed. There is one alternative which is to automatically generate the IDF files and run EnergyPlus in batches and another one which is to use a surrogate model that is trained based on synthetic data produced by EnergyPlus simulations. Connecting to open-source GIS data, the extraction of building geometry is automated, whereas the connection to probabilities from WoonData provides realistic estimation of properties given the archetype and label of the building. The scripts are adjusted for Rotterdam (the Netherlands) and can also be used for other cities in the same country. ++ description of main workflow
 
 ![Graphical abstract](images/graphical_abstract.png)
 
@@ -48,7 +46,7 @@ Energy_prediction_scale
 |   ├── degradation_over_years.py: Functions to modify material & equipment properties according to long-term degradation
 |   ├── climate_change.py: Functions to assign weather data according to climate change probabilities
 |   ├── run_energyplus.py: Building energy assessment using EnergyPlus
-|   ├── run_nn: Building energy assessment via NN
+|   ├── run_nn.py: Building energy assessment via NN
 ├── run_simulations_batches:
 |   ├── run_energyplus_batch.py: Batch energy assessment using parallel processing in EnergyPlus
 |   ├── run_nn_batch.py: Batch energy assessment via NN
@@ -70,13 +68,14 @@ Energy_prediction_scale
 ```
 
 ## How to run the energy assessment
-The main input is the BAG Adres ID which can be retrieved for each building address from https://bagviewer.kadaster.nl/lvbag/bag-viewer. (Enter the address and get the BAG Address)
 
-Check that the archetype is available - if not, enter manually
+The two main files to perform the energy assessment are:
+- `run_energyplus.py`: Building energy assessment using EnergyPlus
+- `run_nn.py`: Building energy assessment via NN
 
-Choose retrofit option / available retrofits from TABULA database
+Upon opening the file, the user is asked to provide the BAG Adres ID which can be retrieved for each building address from https://bagviewer.kadaster.nl/lvbag/bag-viewer. If the archetype and construction year for the given BAG ID are not available in the databases, then the user will be asked to provide them manually. If the energy label is not available, then the initial material properties and equipment availability will be assigned based on the total probability mass over all energy labels for a given archetype and construction year. The user is also asked to provide a retrofit action (do-nothing or specific retrofit packeage). The EnergyPlus code can be used for small number of simulations, since it provides estimations with higher fidelity but in the expense of larger computational time. In contrast, the neural network provides faster assessments and can be used in combination with optimization algorithms to identify effective retrofit strategies at neighborhood level.
 
-![Plot showing time over accuracy for EnergyPlus & Surrogate model]()
+![Plot comparing time over accuracy for EnergyPlus & Surrogate model]()
 
 ## Results (Decision support for retrofit planning)
 
